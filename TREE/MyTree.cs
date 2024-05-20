@@ -202,22 +202,22 @@ namespace TREE
         /// Удаление элемента из дерева
         /// </summary>
         /// <param name="searched">заданный элемент для удаления</param>
-        /// <returns></returns>
         public bool Remove(T searched)
         {
             if (root == null) // Проверяем, пустое ли дерево
                 return false;
 
             // Ищем элемент для удаления
-            Point<T>? parent = null;
-            Point<T>? current = root;
+            Point<T>? parent = null; // элемент перед искомым
+            Point<T>? current = root; // эта переменная предназначена для удаляемого элемента 
+            // ищем и закончим, когда либо не найдем, дойдя до листа, либо найдём
             while (current != null && !current.Data.Equals(searched))
             {
-                parent = current;
-                if (current.Data.CompareTo(searched) < 0)
-                    current = current.Right;
+                parent = current; // запоминаем предыдущий элемент
+                if (current.Data.CompareTo(searched) < 0) // если текущий элемент меньше удаляемого
+                    current = current.Right; // то идём вправо
                 else
-                    current = current.Left;
+                    current = current.Left; // иначе - влево
             }
 
             // Случай 1: Элемент отсутствует
@@ -227,92 +227,90 @@ namespace TREE
             // Случай 2: Элемент - лист
             if (current.Left == null && current.Right == null)
             {
-                if (parent == null) // Это корень дерева
-                    root = null;
-                else if (parent.Left == current)
-                    parent.Left = null;
+                if (parent == null) // Это корень дерева и лист -> единственный элемент в дереве
+                    root = null; // обнуляем корень
+                else if (parent.Left == current) // если это лист слева от предыдущего
+                    parent.Left = null; // то обнуляем левую ссылку предыдущего
                 else
-                    parent.Right = null;
+                    parent.Right = null; // иначе - правую
             }
             // Случай 3: Элемент имеет только одного ребенка
             else if (current.Left == null || current.Right == null)
             {
-                Point<T>? child = current.Left != null ? current.Left : current.Right;
-                if (parent == null)
-                    root = child;
-                else if (parent.Left == current)
-                    parent.Left = child;
+                Point<T>? child = current.Left != null ? current.Left : current.Right; // единственная ветвь найденного элемента
+                if (parent == null) // если найденный элемент - корень
+                    root = child; // то корнем становится его единственный ребёнок
+                else if (parent.Left == current) // если искомый находился слева от предыдущего
+                    parent.Left = child; // то ребёнка прикрепляем в левую ссылку
                 else
-                    parent.Right = child;
+                    parent.Right = child; // иначе - в правую
             }
             // Случай 4: Элемент имеет двух детей
             else
             {
-                Point<T>? successorParent = current;
-                Point<T>? successor = current.Right;
-                while (successor.Left != null)
+                Point<T>? successorParent = current; // элемент перед преемником
+                Point<T>? successor = current.Right; // преемник, который встанет на место удаляемого элемента
+                while (successor.Left != null) // пока не дойдём до "самого левого"(самого маленького) элемента в правом поддереве от удаляемого
                 {
-                    successorParent = successor;
-                    successor = successor.Left;
+                    successorParent = successor; // элемент перед преемником
+                    successor = successor.Left; // преемник
                 }
-
                 // Если преемник - не правый ребенок текущего элемента
                 if (successorParent != current)
                 {
-                    successorParent.Left = successor.Right;
-                    successor.Right = current.Right;
+                    successorParent.Left = successor.Right; // преемник может иметь правого ребенка,
+                                                            // поэтому мы присваиваем правого ребенка преемника левой ветке предыдущего
+                    successor.Right = current.Right; // затем присваиваем правому поддереву преемника правого ребенка удаляемого узла
                 }
-
+                // замещение удаляемого узла преемником
+                // присоединяем к преемнику левое поддерево
                 successor.Left = current.Left;
-
-                if (parent == null)
-                    root = successor;
-                else if (parent.Left == current)
-                    parent.Left = successor;
+                // обновление родителя удаляемого узла
+                if (parent == null) // если искомый элемент оказался корнем
+                    root = successor; // преемник становится корнем
+                else if (parent.Left == current) // если найденный элемент находился слева от предыдущего
+                    parent.Left = successor; // то меняем левую ссылку у предыдущего
                 else
-                    parent.Right = successor;
+                    parent.Right = successor; // иначе - правую
             }
-
-            count--;
-            return true;
+            count--; // удалили элемент - уменьшили количество записей
+            return true; // удаление произошло
         }
 
+        /// <summary>
+        /// Удаление дерева
+        /// </summary>
+        public void Clear()
+        {
+            root = null; // обнуляем корень
+            count = 0; // обнуляем количество записей
+        }
 
+        /// <summary>
+        /// Метод для подсчета количества листьев в дереве
+        /// </summary>
+        /// <returns>Количество листьев</returns>
+        public int CountLeaves()
+        {
+            return CountLeaves(root); // вызываем рекурсивый метод для подсчёта листьев во всём дереве
+        }
 
-
-
-        //public int SearchLeaves()
-        //{
-        //    // с помощью данных двух переменных найдём место в дереве поиска для добавляемого элемента
-        //    Point<T>? point = root;
-        //    Point<T>? current = null;
-
-        //    bool isExist = false; // с помощью данной переменной будем проверять, есть ли добавляемый элемент уже в дереве;
-        //                          // если уже есть - не добавляем
-
-        //    // пока не дойдём до листа (и найдём место для добавляемого элемента)
-        //    // или пока не найдём идентичный добавляемому элемент (и не будем добавлять)
-        //    while (point != null && !isExist)
-        //    {
-        //        current = point;
-        //        // если нашли такой же элемент в дереве
-        //        if (point.Data.CompareTo(data) == 0)
-        //        {
-        //            isExist = true;
-        //        }
-        //        else
-        //        {
-        //            // движемся дальше по дереву
-        //            if (point.Data.CompareTo(data) < 0) // меньшие - в левое поддерево
-        //            {
-        //                point = point.Left;
-        //            }
-        //            else // бОльшие - в правое поддерево
-        //            {
-        //                point = point.Right;
-        //            }
-        //        }
-        //    }
-        //}
+        /// <summary>
+        /// Рекурсивный метод для подсчета количества листьев в дереве/поддереве
+        /// </summary>
+        /// <param name="point">Текущий узел дерева</param>
+        /// <returns>Количество листьев</returns>
+        private int CountLeaves(Point<T>? point)
+        {
+            if (point == null) // если дошли до пустого элемента
+            {
+                return 0; // возвращаем ноль
+            }
+            if (point.Left == null && point.Right == null) // наткнулись на лист
+            {
+                return 1; // посчитали
+            }
+            return CountLeaves(point.Left) + CountLeaves(point.Right); // складываем результаты вызовов рекурсивного метода
+        }
     }
 }

@@ -63,18 +63,19 @@ namespace TREE
             int answer;
             do
             {
-                Console.WriteLine("1.Сформировать идеально сбалансированное бинарное дерево");
-                Console.WriteLine("2.Распечатать дерево");
-                Console.WriteLine("3.Найти количество листьев в дереве");
-                Console.WriteLine("4.Преобразовать идеально сбалансированное дерево в дерево поиска");
-                Console.WriteLine("5.Удалить из дерева поиска элемент с заданным ключом");
-                Console.WriteLine("6.Удалить дерево");
+                Console.WriteLine("1.Сформировать идеально сбалансированное бинарное дерево вручную");
+                Console.WriteLine("2.Сформировать идеально сбалансированное бинарное дерево ДСЧ");
+                Console.WriteLine("3.Распечатать дерево");
+                Console.WriteLine("4.Найти количество листьев в дереве");
+                Console.WriteLine("5.Преобразовать идеально сбалансированное дерево в дерево поиска");
+                Console.WriteLine("6.Удалить из дерева поиска элемент с заданным ключом");
+                Console.WriteLine("7.Удалить дерево");
                 Console.WriteLine("0.Закончить работу с деревом");
                 Console.WriteLine("Выберите пункт меню");
                 answer = EnterNumber.EnterIntNumber(); // выбираем действие
                 switch (answer)
                 {
-                    case 1: // первый выбор (Формирование ИСД)
+                    case 1: // первый выбор (Формирование вручную ИСД)
                         {
                             Console.WriteLine("Введите количество объектов");
                             int count = EnterNumber.EnterIntNumber(); // вводим количество элементов, которыми будем заполнять дерево
@@ -88,17 +89,32 @@ namespace TREE
                             tree.ShowTree();
                             break;
                         }
-                    case 2: // второй выбор (Печать)
+                    case 2: // второй выбор (Формирование ДСЧ ИСД)
+                        {
+                            Console.WriteLine("Введите количество объектов");
+                            int count = EnterNumber.EnterIntNumber(); // вводим количество элементов, которыми будем заполнять дерево
+                            while (count < 0)
+                            {
+                                Console.WriteLine("Количество элементов не может быть отрицательным. Введите количество снова.");
+                                count = EnterNumber.EnterIntNumber(); // вводим количество элементов, которыми будем заполнять дерево
+                            }
+                            tree = new MyTree<Shape>(count); // создаём идеально сбалансированное дерево с заданным числом элементов
+                            Console.WriteLine("Сформированное идеально сбалансированное дерево:");
+                            tree.ShowTree();
+                            break;
+                        }
+                    case 3: // второй выбор (Печать)
                         {
                             tree.ShowTree();
                             break;
                         }
-                    //case 3: // третий выбор (Количество листьев)
-                    //    {
-                    //        list.PrintList();
-                    //        break;
-                    //    }
-                    case 4: // четвертый выбор (ИСД -> дерево поиска)
+                    case 4: // третий выбор (Количество листьев)
+                        {
+                            Console.WriteLine($"В дереве ИСД: {tree.CountLeaves()} листьев");
+                            Console.WriteLine($"В дереве поиска: {searchTree.CountLeaves()} листьев");
+                            break;
+                        }
+                    case 5: // четвертый выбор (ИСД -> дерево поиска)
                         {
                             searchTree = tree.TransformToFindTree();
                             Console.WriteLine("ИСД");
@@ -107,7 +123,7 @@ namespace TREE
                             searchTree.ShowTree();
                             break;
                         }
-                    case 5: // пятый выбор (Удаление элемента) ВЫПОЛНЯЕТСЯ С ДЕРЕВОМ ПОИСКА
+                    case 6: // пятый выбор (Удаление элемента) ВЫПОЛНЯЕТСЯ С ДЕРЕВОМ ПОИСКА
                         {
                             if (searchTree.Count == 0) Console.WriteLine("Дерево поиска пустое, для удаления добавьте в него элементы");
                             else
@@ -129,12 +145,12 @@ namespace TREE
                             }
                             break;
                         }
-                    //case 6: // шестой выбор (Удаление дерева)
-                    //    {
-                    //        list.Clear();
-                    //        Console.WriteLine("Удаление списка завершено");
-                    //        break;
-                    //    }
+                    case 7: // шестой выбор (Удаление дерева)
+                        {
+                            tree.Clear();
+                            Console.WriteLine("Удаление списка завершено");
+                            break;
+                        }
                     case 0: // программа продолжит работу
                         {
                             Console.WriteLine("Выбор закрыт");
