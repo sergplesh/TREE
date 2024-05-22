@@ -69,7 +69,8 @@ namespace TREE
                 Console.WriteLine("4.Найти количество листьев в дереве");
                 Console.WriteLine("5.Преобразовать идеально сбалансированное дерево в дерево поиска");
                 Console.WriteLine("6.Удалить из дерева поиска элемент с заданным ключом");
-                Console.WriteLine("7.Удалить дерево");
+                Console.WriteLine("7.Удалить дерево ИСД");
+                Console.WriteLine("7.Удалить дерево поиска");
                 Console.WriteLine("0.Закончить работу с деревом");
                 Console.WriteLine("Выберите пункт меню");
                 answer = EnterNumber.EnterIntNumber(); // выбираем действие
@@ -103,18 +104,18 @@ namespace TREE
                             tree.ShowTree();
                             break;
                         }
-                    case 3: // второй выбор (Печать)
+                    case 3: // третий выбор (Печать)
                         {
                             tree.ShowTree();
                             break;
                         }
-                    case 4: // третий выбор (Количество листьев)
+                    case 4: // четвёртый выбор (Количество листьев)
                         {
                             Console.WriteLine($"В дереве ИСД: {tree.CountLeaves()} листьев");
                             Console.WriteLine($"В дереве поиска: {searchTree.CountLeaves()} листьев");
                             break;
                         }
-                    case 5: // четвертый выбор (ИСД -> дерево поиска)
+                    case 5: // пятый выбор (ИСД -> дерево поиска)
                         {
                             searchTree = tree.TransformToFindTree();
                             Console.WriteLine("ИСД");
@@ -123,7 +124,7 @@ namespace TREE
                             searchTree.ShowTree();
                             break;
                         }
-                    case 6: // пятый выбор (Удаление элемента) ВЫПОЛНЯЕТСЯ С ДЕРЕВОМ ПОИСКА
+                    case 6: // шестой выбор (Удаление элемента) ВЫПОЛНЯЕТСЯ С ДЕРЕВОМ ПОИСКА
                         {
                             if (searchTree.Count == 0) Console.WriteLine("Дерево поиска пустое, для удаления добавьте в него элементы");
                             else
@@ -145,10 +146,16 @@ namespace TREE
                             }
                             break;
                         }
-                    case 7: // шестой выбор (Удаление дерева)
+                    case 7: // седьмой выбор (Удаление дерева ИСД)
                         {
                             tree.Clear();
-                            Console.WriteLine("Удаление списка завершено");
+                            Console.WriteLine("Удаление ИСД завершено");
+                            break;
+                        }
+                    case 8: // восьмой выбор (Удаление дерева поиска)
+                        {
+                            searchTree.Clear();
+                            Console.WriteLine("Удаление дерева поиска завершено");
                             break;
                         }
                     case 0: // программа продолжит работу

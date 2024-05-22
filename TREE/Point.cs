@@ -11,7 +11,7 @@ namespace TREE
     /// Элемент дерева
     /// </summary>
     /// <typeparam name="T">Обобщённый тип данных</typeparam>
-    public class Point<T> where T : IComparable
+    public class Point<T> where T: IComparable
     {
         /// <summary>
         /// Информационное поле
