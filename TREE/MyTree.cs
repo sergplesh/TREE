@@ -40,7 +40,47 @@ namespace TREE
         }
 
         /// <summary>
-        /// Создание сбаланисированного дерево
+        /// Конструктор для сбалансированного дерева (заполненное элементами массива)
+        /// </summary>
+        /// <param name="array">массив с элементами</param>
+        public MyTree(T[] array)
+        {
+            count = array.Length;
+            int current = 0; // номер элемента из массива
+            root = MakeTree(array.Length, root, array, ref current); // создаём сбалансированное дерево с корнем root
+        }
+
+        /// <summary>
+        /// Создание сбаланисированного дерева вручную с помощью массива
+        /// </summary>
+        /// <param name="lenght">количество элементов в дереве/поддереве</param>
+        /// <param name="root">корень дерева/поддерева</param>
+        /// <param name="array">массив из элементов</param>
+        /// <returns></returns>
+        Point<T>? MakeTree(int lenght, Point<T> root, T[] array, ref int current)
+        {
+            // если число записей в дереве 0 -> возвращаем null-ссылку
+            if (lenght == 0)
+                return null;
+
+            // создаём информационное поле
+            T data = (T)array[current].Clone();
+            // создаём элемент дерева с созданным инфо полем
+            Point<T> newItem = new(data);
+            current++;
+
+            // для сбалансированного дерева поровну распределяем элементы в правое и левое поддеревья
+            int left = lenght / 2;
+            int right = lenght - left - 1;
+
+            // создаём (тоже сбалансированные) левое и правое поддеревья
+            newItem.Left = MakeTree(left, newItem.Left, array, ref current);
+            newItem.Right = MakeTree(right, newItem.Right, array, ref current);
+            return newItem; // возвращаем корень дерева/поддерева
+        }
+
+        /// <summary>
+        /// Создание сбаланисированного дерево с рандомными значениями
         /// </summary>
         /// <param name="lenght">количество элементов в дереве/поддереве</param>
         /// <param name="root">корень дерева/поддерева</param>
@@ -113,6 +153,14 @@ namespace TREE
             Point<T>? point = root;
             Point<T>? current = null;
 
+            if (point == null) // дерево пустое
+            {
+                Point<T> newPoint = new Point<T>(data); // создаём элемент с заданным инфополем
+                root = newPoint; // ставим в корень
+                count++; // увеличиваем количество элементов, находящихся в дереве
+                return true; // добавление произошло
+            }
+
             bool isExist = false; // с помощью данной переменной будем проверять, есть ли добавляемый элемент уже в дереве;
                                   // если уже есть - не добавляем
 
@@ -142,9 +190,10 @@ namespace TREE
 
             if (isExist) // Элемент уже есть в дереве - не добавляем
                 return false; // добавление не произошло
+
             else // Добавляем элемент на своё место
             {
-                Point<T> newPoint = new(data); // создаём элемент с заданным инфополем
+                Point<T> newPoint = new Point<T>(data); // создаём элемент с заданным инфополем
                 // присоединяем к найденному листу current с правильной стороны
                 if (current.Data.CompareTo(data) < 0) // если меньше - элемент идёт в левое поддерево
                     current.Left = newPoint;

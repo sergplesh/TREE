@@ -70,7 +70,7 @@ namespace TREE
                 Console.WriteLine("5.Преобразовать идеально сбалансированное дерево в дерево поиска");
                 Console.WriteLine("6.Удалить из дерева поиска элемент с заданным ключом");
                 Console.WriteLine("7.Удалить дерево ИСД");
-                Console.WriteLine("7.Удалить дерево поиска");
+                Console.WriteLine("8.Удалить дерево поиска");
                 Console.WriteLine("0.Закончить работу с деревом");
                 Console.WriteLine("Выберите пункт меню");
                 answer = EnterNumber.EnterIntNumber(); // выбираем действие
@@ -78,6 +78,7 @@ namespace TREE
                 {
                     case 1: // первый выбор (Формирование вручную ИСД)
                         {
+                            // количество элементов в формируемом дереве
                             Console.WriteLine("Введите количество объектов");
                             int count = EnterNumber.EnterIntNumber(); // вводим количество элементов, которыми будем заполнять дерево
                             while (count < 0)
@@ -85,7 +86,19 @@ namespace TREE
                                 Console.WriteLine("Количество элементов не может быть отрицательным. Введите количество снова.");
                                 count = EnterNumber.EnterIntNumber(); // вводим количество элементов, которыми будем заполнять дерево
                             }
-                            tree = new MyTree<Shape>(count); // создаём идеально сбалансированное дерево с заданным числом элементов
+                            // массив элементов
+                            Shape[] array = new Shape[count]; // на основе данного массива затем создадим связанный список
+                            Shape added = new Shape();
+                            for (int i = 0; i < count; i++)
+                            {
+                                Console.WriteLine($"Ввод {i + 1} фигуры");
+                                // выбираем фигуру для добавления
+                                MenuChoise(ref added);
+                                Console.WriteLine("Введите данные для объекта:");
+                                added.Init(); // задаем параметры для элемента, который хотим добавить
+                                array[i] = (Shape)added.Clone();
+                            }
+                            tree = new MyTree<Shape>(array); // создаём идеально сбалансированное дерево с введёнными элементами
                             Console.WriteLine("Сформированное идеально сбалансированное дерево:");
                             tree.ShowTree();
                             break;

@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TREE", "TREE\TREE.csproj", "{DA835CAA-74C3-4C8C-AF5C-E1A4DA310E10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TREE", "TREE\TREE.csproj", "{DA835CAA-74C3-4C8C-AF5C-E1A4DA310E10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTree", "TestTree\TestTree.csproj", "{943EDC7B-9799-4C26-B95C-0C3278D378D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeometrucShapeCarLibrary", "GeometrucShapeCarLibrary\GeometrucShapeCarLibrary.csproj", "{2725066B-0029-43CD-8660-C31F87D07302}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{DA835CAA-74C3-4C8C-AF5C-E1A4DA310E10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA835CAA-74C3-4C8C-AF5C-E1A4DA310E10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA835CAA-74C3-4C8C-AF5C-E1A4DA310E10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{943EDC7B-9799-4C26-B95C-0C3278D378D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{943EDC7B-9799-4C26-B95C-0C3278D378D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{943EDC7B-9799-4C26-B95C-0C3278D378D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{943EDC7B-9799-4C26-B95C-0C3278D378D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2725066B-0029-43CD-8660-C31F87D07302}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2725066B-0029-43CD-8660-C31F87D07302}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2725066B-0029-43CD-8660-C31F87D07302}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2725066B-0029-43CD-8660-C31F87D07302}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
