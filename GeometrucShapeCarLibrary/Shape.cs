@@ -176,7 +176,7 @@ namespace GeometrucShapeCarLibrary
             //return String.Compare(this.Name, s.Name);
             if (id.Number != s.id.Number) return String.Compare(this.id.Number.ToString(), s.id.Number.ToString());
             else if (this.Name != s.Name) return String.Compare(this.Name, s.Name);
-            else return -1;
+            else return 0;
         }
 
         // интерфейс IClonable

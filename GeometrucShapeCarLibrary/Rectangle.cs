@@ -147,11 +147,11 @@ namespace GeometrucShapeCarLibrary
             if (obj is not Rectangle) return -1;
             Rectangle? s = obj as Rectangle;
             if (s == null) return -1;
-            if (base.CompareTo(obj) == -1)
+            if (base.CompareTo(obj) == 0)
             {
                 if (this.Length != s.Length) return String.Compare(this.Length.ToString(), s.Length.ToString());
                 else if (this.Width != s.Width) return String.Compare(this.Width.ToString(), s.Width.ToString());
-                else return -1;
+                else return 0;
             }
             else return base.CompareTo(obj);
         }

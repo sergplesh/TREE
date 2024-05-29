@@ -17,7 +17,7 @@ namespace TREE
         /// <summary>
         /// корень дерева
         /// </summary>
-        Point<T>? root = null;
+        public Point<T>? root = null;
 
         /// <summary>
         /// число записей
@@ -264,9 +264,9 @@ namespace TREE
             {
                 parent = current; // запоминаем предыдущий элемент
                 if (current.Data.CompareTo(searched) < 0) // если текущий элемент меньше удаляемого
-                    current = current.Right; // то идём вправо
+                    current = current.Left; // то идём влево
                 else
-                    current = current.Left; // иначе - влево
+                    current = current.Right; // иначе - вправо
             }
 
             // Случай 1: Элемент отсутствует

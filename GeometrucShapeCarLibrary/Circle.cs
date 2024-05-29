@@ -141,7 +141,7 @@ namespace GeometrucShapeCarLibrary
             if (obj is not Circle) return -1;
             Circle? s = obj as Circle;
             if (s == null) return -1;
-            if (base.CompareTo(obj) == -1)
+            if (base.CompareTo(obj) == 0)
             {
                 return String.Compare(this.Radius.ToString(), s.Radius.ToString());
             }

@@ -113,7 +113,7 @@ namespace GeometrucShapeCarLibrary
             if (obj is not Parallelepiped) return -1;
             Parallelepiped? s = obj as Parallelepiped;
             if (s == null) return -1;
-            if (base.CompareTo(obj) == -1)
+            if (base.CompareTo(obj) == 0)
             {
                 return String.Compare(this.Height.ToString(), s.Height.ToString());
             }
