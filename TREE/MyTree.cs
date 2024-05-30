@@ -225,10 +225,11 @@ namespace TREE
         {
             if (point != null) // элемент существует
             {
-                // забрасываем в массив элементы с левого поддерева
-                TransformToArray(point.Left, array, ref current);
+                //ОБХОД СВЕРХУ ВНИЗ (ТО ЕСТЬ СНАЧАЛА ЗАПИСЫВАЕМ В МАССИВ КОРЕНЬ, ПОТОМ: ЛЕВОЕ ДЕРЕВО - ПРАВОЕ ДЕРЕВО)
                 array[current] = point.Data; // записываем в массив элемент
                 current++; // считаем занесённый в массив элемент
+                // забрасываем в массив элементы с левого поддерева
+                TransformToArray(point.Left, array, ref current);
                 // забрасываем в массив элементы с правого поддерева
                 TransformToArray(point.Right, array, ref current);
             }

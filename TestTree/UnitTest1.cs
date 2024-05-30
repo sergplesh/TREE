@@ -519,15 +519,16 @@ namespace TestTree
             // Arrange
             Shape[] array = new Shape[3];
             // элементы: 1, 2, 3
-            array[0] = new Shape("N", 2);
-            array[1] = new Shape("N", 1);
-            array[2] = new Shape("N", 3);
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] = new Shape("элемент", i + 1);
+            }
             int expectedLeaves = 1;
             MyTree<Shape> tree = new MyTree<Shape>(array);
             // в ИСД 3 элемента должны расположиться следующим образом:
-            //     2      - высота дерева = 1
+            //     1      - высота дерева = 1
             //    /  \
-            //   1    3   - 2 листа
+            //   2    3   - 2 листа
 
             // Act
             MyTree<Shape> searchTree = tree.TransformToFindTree();
