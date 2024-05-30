@@ -47,7 +47,7 @@ namespace TREE
                     }
                 default: // введённое число не подошло ни к одному пункту
                     {
-                        Console.WriteLine("Неправильно задан пункт меню");
+                        Console.WriteLine("Неправильно задан пункт меню. По умолчанию выбрана неопределённая фигура.");
                         break;
                     }
             }
@@ -65,7 +65,7 @@ namespace TREE
             {
                 Console.WriteLine("1.Сформировать идеально сбалансированное бинарное дерево вручную");
                 Console.WriteLine("2.Сформировать идеально сбалансированное бинарное дерево ДСЧ");
-                Console.WriteLine("3.Распечатать дерево");
+                Console.WriteLine("3.Распечатать дерево ИСД и дерево поиска");
                 Console.WriteLine("4.Найти количество листьев в дереве");
                 Console.WriteLine("5.Преобразовать идеально сбалансированное дерево в дерево поиска");
                 Console.WriteLine("6.Удалить из дерева поиска элемент с заданным ключом");
@@ -73,20 +73,15 @@ namespace TREE
                 Console.WriteLine("8.Удалить дерево поиска");
                 Console.WriteLine("9.Сформировать дерево поиска вручную");
                 Console.WriteLine("0.Закончить работу с деревом");
-                Console.WriteLine("Выберите пункт меню");
-                answer = EnterNumber.EnterIntNumber(); // выбираем действие
+                //Console.WriteLine("Выберите пункт меню");
+                answer = EnterNumber.EnterIntNumber("Выберите пункт меню", 0); // выбираем действие
                 switch (answer)
                 {
                     case 1: // первый выбор (Формирование вручную ИСД)
                         {
                             // количество элементов в формируемом дереве
-                            Console.WriteLine("Введите количество объектов");
-                            int count = EnterNumber.EnterIntNumber(); // вводим количество элементов, которыми будем заполнять дерево
-                            while (count < 0)
-                            {
-                                Console.WriteLine("Количество элементов не может быть отрицательным. Введите количество снова.");
-                                count = EnterNumber.EnterIntNumber(); // вводим количество элементов, которыми будем заполнять дерево
-                            }
+                            //Console.WriteLine("Введите количество объектов");
+                            int count = EnterNumber.EnterIntNumber("Введите количество объектов", 0); // вводим количество элементов, которыми будем заполнять дерево
                             // массив элементов
                             Shape[] array = new Shape[count]; // на основе данного массива затем создадим связанный список
                             Shape added = new Shape();
@@ -107,12 +102,7 @@ namespace TREE
                     case 2: // второй выбор (Формирование ДСЧ ИСД)
                         {
                             Console.WriteLine("Введите количество объектов");
-                            int count = EnterNumber.EnterIntNumber(); // вводим количество элементов, которыми будем заполнять дерево
-                            while (count < 0)
-                            {
-                                Console.WriteLine("Количество элементов не может быть отрицательным. Введите количество снова.");
-                                count = EnterNumber.EnterIntNumber(); // вводим количество элементов, которыми будем заполнять дерево
-                            }
+                            int count = EnterNumber.EnterIntNumber("Введите количество объектов", 0); // вводим количество элементов, которыми будем заполнять дерево
                             tree = new MyTree<Shape>(count); // создаём идеально сбалансированное дерево с заданным числом элементов
                             Console.WriteLine("Сформированное идеально сбалансированное дерево:");
                             tree.ShowTree();
@@ -120,7 +110,10 @@ namespace TREE
                         }
                     case 3: // третий выбор (Печать)
                         {
+                            Console.WriteLine("ИСД:");
                             tree.ShowTree();
+                            Console.WriteLine("Дерево поиска:");
+                            searchTree.ShowTree();
                             break;
                         }
                     case 4: // четвёртый выбор (Количество листьев)
@@ -177,12 +170,7 @@ namespace TREE
                             searchTree.Clear(); // очищаем дерево поиска
                             // количество элементов в формируемом дереве
                             Console.WriteLine("Введите количество объектов");
-                            int count = EnterNumber.EnterIntNumber(); // вводим количество элементов, которыми будем заполнять дерево
-                            while (count < 0)
-                            {
-                                Console.WriteLine("Количество элементов не может быть отрицательным. Введите количество снова.");
-                                count = EnterNumber.EnterIntNumber(); // вводим количество элементов, которыми будем заполнять дерево
-                            }
+                            int count = EnterNumber.EnterIntNumber("Введите количество объектов", 0); // вводим количество элементов, которыми будем заполнять дерево
                             Shape added = new Shape();
                             for (int i = 0; i < count; i++)
                             {

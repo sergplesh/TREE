@@ -6,4 +6,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Car.cs" />
+    <Compile Remove="Circle.cs" />
+    <Compile Remove="EnterNumber.cs" />
+    <Compile Remove="IInit.cs" />
+    <Compile Remove="INameEquatable.cs" />
+    <Compile Remove="LengthComparer.cs" />
+    <Compile Remove="Parallelepiped.cs" />
+    <Compile Remove="Rectangle.cs" />
+    <Compile Remove="Shape.cs" />
+  </ItemGroup>
+
 </Project>

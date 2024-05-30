@@ -174,7 +174,8 @@ namespace GeometrucShapeCarLibrary
             Shape? s = obj as Shape;
             if (s == null) return -1;
             //return String.Compare(this.Name, s.Name);
-            if (id.Number != s.id.Number) return String.Compare(this.id.Number.ToString(), s.id.Number.ToString());
+            if (this.id.Number != s.id.Number) return (this.id.Number).CompareTo(s.id.Number);
+            //if (this.id.Number != s.id.Number) return String.Compare(this.id.Number.ToString(), s.id.Number.ToString());
             else if (this.Name != s.Name) return String.Compare(this.Name, s.Name);
             else return 0;
         }

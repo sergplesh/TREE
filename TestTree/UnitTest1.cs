@@ -7,7 +7,7 @@ namespace TestTree
     public class UnitTest1
     {
         [TestMethod]
-        public void CountLeaves_ReturnsCorrectNumberOfLeaves()
+        public void CountLeaves_ReturnsCorrectNumberOfLeaves() // подсчёт листьев в дереве
         {
             // Arrange
             MyTree<Shape> tree = new MyTree<Shape>(0);
@@ -33,7 +33,7 @@ namespace TestTree
         }
 
         [TestMethod]
-        public void RemoveElement_Leaf()
+        public void RemoveElement_LeftLeaf() // удаление левого листа
         {
             // Arrange
             MyTree<Shape> tree = new MyTree<Shape>(0);
@@ -68,7 +68,42 @@ namespace TestTree
         }
 
         [TestMethod]
-        public void RemoveElement_OneChild()
+        public void RemoveElement_RightLeaf() // удаление правого листа
+        {
+            // Arrange
+            MyTree<Shape> tree = new MyTree<Shape>(0);
+            tree.AddPoint(new Shape("элемент", 5));
+            tree.AddPoint(new Shape("элемент", 3));
+            tree.AddPoint(new Shape("элемент", 7));
+            tree.AddPoint(new Shape("элемент", 2));
+            tree.AddPoint(new Shape("элемент", 4));
+            tree.AddPoint(new Shape("элемент", 6));
+            tree.AddPoint(new Shape("элемент", 8));
+            //     5
+            //    /  \
+            //   3    7
+            //  / \  / \
+            // 2  4  6  8   - 4 листа
+            int expectedCount = 6;
+            int expectedLeaves = 3;
+
+            // Act
+            bool removed = tree.Remove(new Shape("элемент", 6));
+            //     5
+            //    /  \
+            //   3    7
+            //  / \    \
+            // 2  4     8    - 3 листа
+            int leafCount = tree.CountLeaves();
+
+            // Assert
+            Assert.IsTrue(removed);
+            Assert.AreEqual(expectedCount, tree.Count);
+            Assert.AreEqual(expectedLeaves, leafCount);
+        }
+
+        [TestMethod]
+        public void RemoveLeftElement_OneLeftChild() // удаление узла (в левой ссылке) с одним потомком
         {
             // Arrange
             MyTree<Shape> tree = new MyTree<Shape>(0);
@@ -102,7 +137,104 @@ namespace TestTree
         }
 
         [TestMethod]
-        public void RemoveElement_TwoChild()
+        public void RemoveLeftElement_OneRightChild() // удаление узла (в левой ссылке) с одним потомком
+        {
+            // Arrange
+            MyTree<Shape> tree = new MyTree<Shape>(0);
+            tree.AddPoint(new Shape("элемент", 5));
+            tree.AddPoint(new Shape("элемент", 3));
+            tree.AddPoint(new Shape("элемент", 7));
+            tree.AddPoint(new Shape("элемент", 2));
+            tree.AddPoint(new Shape("элемент", 4));
+            tree.AddPoint(new Shape("элемент", 8));
+            //     5
+            //    /  \
+            //   3    7
+            //  / \    \
+            // 2  4     8    - 3 листа
+            int expectedCount = 5;
+            int expectedLeaves = 3;
+
+            // Act
+            bool removed = tree.Remove(new Shape("элемент", 8));
+            //     5
+            //    /  \
+            //   3    8
+            //  / \   
+            // 2  4         - 3 листа
+            int leafCount = tree.CountLeaves();
+
+            // Assert
+            Assert.IsTrue(removed);
+            Assert.AreEqual(expectedCount, tree.Count);
+            Assert.AreEqual(expectedLeaves, leafCount);
+        }
+
+        [TestMethod]
+        public void RemoveRightElement_OneChild() // удаление узла (в правой ссылке) с одним потомком
+        {
+            // Arrange
+            MyTree<Shape> tree = new MyTree<Shape>(0);
+            tree.AddPoint(new Shape("элемент", 5));
+            tree.AddPoint(new Shape("элемент", 3));
+            tree.AddPoint(new Shape("элемент", 7));
+            tree.AddPoint(new Shape("элемент", 2));
+            tree.AddPoint(new Shape("элемент", 8));
+            tree.AddPoint(new Shape("элемент", 6));
+            //     5
+            //    /  \
+            //   3    6
+            //  /    / \
+            // 2    7   8    - 3 листа
+            int expectedCount = 5;
+            int expectedLeaves = 3;
+
+            // Act
+            bool removed = tree.Remove(new Shape("элемент", 3));
+            //     5
+            //    /  \
+            //   2    6
+            //       / \
+            //      7   8    - 3 листа
+            int leafCount = tree.CountLeaves();
+
+            // Assert
+            Assert.IsTrue(removed);
+            Assert.AreEqual(expectedCount, tree.Count);
+            Assert.AreEqual(expectedLeaves, leafCount);
+        }
+
+        [TestMethod]
+        public void RemoveRootElement_OneChild() // удаление узла-корня с одним потомком
+        {
+            // Arrange
+            MyTree<Shape> tree = new MyTree<Shape>(0);
+            tree.AddPoint(new Shape("элемент", 5));
+            tree.AddPoint(new Shape("элемент", 3));
+            tree.AddPoint(new Shape("элемент", 2));
+            //     5
+            //    /   
+            //   3    
+            //  /      
+            // 2             - 1 лист
+            int expectedCount = 2;
+            int expectedLeaves = 1;
+
+            // Act
+            bool removed = tree.Remove(new Shape("элемент", 5));
+            //     3
+            //    /  
+            //   2           - 1 лист
+            int leafCount = tree.CountLeaves();
+
+            // Assert
+            Assert.IsTrue(removed);
+            Assert.AreEqual(expectedCount, tree.Count);
+            Assert.AreEqual(expectedLeaves, leafCount);
+        }
+
+        [TestMethod]
+        public void RemoveRightElement_TwoChild() // удаление элемента (в правой ссылке) с двумя потомками
         {
             // Arrange
             MyTree<Shape> tree = new MyTree<Shape>(0);
@@ -137,35 +269,32 @@ namespace TestTree
         }
 
         [TestMethod]
-        public void RemoveElement_TwoChild_SuccessorIsNotRightChild()
+        public void RemoveLeftElement_TwoChild() // удаление элемента (в левой ссылке) с двумя потомками
         {
             // Arrange
             MyTree<Shape> tree = new MyTree<Shape>(0);
             tree.AddPoint(new Shape("элемент", 5));
             tree.AddPoint(new Shape("элемент", 3));
-            tree.AddPoint(new Shape("элемент", 8));
+            tree.AddPoint(new Shape("элемент", 7));
             tree.AddPoint(new Shape("элемент", 2));
             tree.AddPoint(new Shape("элемент", 4));
-            tree.AddPoint(new Shape("элемент", 7));
             tree.AddPoint(new Shape("элемент", 6));
-            tree.AddPoint(new Shape("элемент", 9));
+            tree.AddPoint(new Shape("элемент", 8));
             //     5
             //    /  \
-            //   3    8
+            //   3    7
             //  / \  / \
-            // 2  4  7  9   
-            //      /
-            //     6       - 5 листов
-            int expectedCount = 7;
-            int expectedLeaves = 4;
+            // 2  4  6  8   - 4 листа
+            int expectedCount = 6;
+            int expectedLeaves = 3;
 
             // Act
-            bool removed = tree.Remove(new Shape("элемент", 8));
-            //     5
-            //    /  \
-            //   3    6
-            //  / \    \
-            // 2  4     8    - 3 листа
+            bool removed = tree.Remove(new Shape("элемент", 3));
+            //      5
+            //    /   \
+            //   2     7
+            //    \   / \
+            //     4 6   8    - 3 листа
             int leafCount = tree.CountLeaves();
 
             // Assert
@@ -175,7 +304,45 @@ namespace TestTree
         }
 
         [TestMethod]
-        public void RemoveElement_NotExistElement()
+        public void RemoveElement_TwoChild_SuccessorIsNotRightChild() // удаление элемента с двумя потомками, но наследник не правый элемент от удаляемого
+        {
+            // Arrange
+            MyTree<Shape> tree = new MyTree<Shape>(0);
+            tree.AddPoint(new Shape("элемент", 5));
+            tree.AddPoint(new Shape("элемент", 3));
+            tree.AddPoint(new Shape("элемент", 7));
+            tree.AddPoint(new Shape("элемент", 2));
+            tree.AddPoint(new Shape("элемент", 4));
+            tree.AddPoint(new Shape("элемент", 6));
+            tree.AddPoint(new Shape("элемент", 9));
+            tree.AddPoint(new Shape("элемент", 8));
+            //     5
+            //    /  \
+            //   3    7
+            //  / \  / \
+            // 2  4  6  9   
+            //         /
+            //        8       - 4 листА
+            int expectedCount = 7;
+            int expectedLeaves = 4;
+
+            // Act
+            bool removed = tree.Remove(new Shape("элемент", 7));
+            //     5
+            //    /  \
+            //   3    8
+            //  / \  / \
+            // 2  4  6  9   - 4 листа
+            int leafCount = tree.CountLeaves();
+
+            // Assert
+            Assert.IsTrue(removed);
+            Assert.AreEqual(expectedCount, tree.Count);
+            Assert.AreEqual(expectedLeaves, leafCount);
+        }
+
+        [TestMethod]
+        public void RemoveElement_NotExistElement() // удаление не существующего
         {
             // Arrange
             MyTree<Shape> tree = new MyTree<Shape>(0);
@@ -195,7 +362,7 @@ namespace TestTree
             int expectedLeaves = 4;
 
             // Act
-            bool removed = tree.Remove(new Shape("элемент", 10));
+            bool removed = tree.Remove(new Shape("элемент", 1));
             // дерево не изменится
             //     5
             //    /  \
@@ -211,7 +378,43 @@ namespace TestTree
         }
 
         [TestMethod]
-        public void ClearTree()
+        public void RemoveRootTwoChild() // удаление корня с двумя потомками
+        {
+            // Arrange
+            MyTree<Shape> tree = new MyTree<Shape>(0);
+            tree.AddPoint(new Shape("элемент", 5));
+            tree.AddPoint(new Shape("элемент", 3));
+            tree.AddPoint(new Shape("элемент", 7));
+            tree.AddPoint(new Shape("элемент", 2));
+            tree.AddPoint(new Shape("элемент", 4));
+            tree.AddPoint(new Shape("элемент", 6));
+            tree.AddPoint(new Shape("элемент", 8));
+            //     5
+            //    /  \
+            //   3    7
+            //  / \  / \
+            // 2  4  6  8   - 4 листа
+            int expectedCount = 6;
+            int expectedLeaves = 3;
+
+            // Act
+            bool removed = tree.Remove(new Shape("элемент", 5));
+            // дерево не изменится
+            //     6
+            //    /  \
+            //   3    7
+            //  / \    \
+            // 2  4     8   - 3 листа
+            int leafCount = tree.CountLeaves();
+
+            // Assert
+            Assert.IsTrue(removed);
+            Assert.AreEqual(expectedCount, tree.Count);
+            Assert.AreEqual(expectedLeaves, leafCount);
+        }
+
+        [TestMethod]
+        public void ClearTree() // удаление дерева
         {
             // Arrange
             MyTree<Shape> tree = new MyTree<Shape>(0);
@@ -237,25 +440,28 @@ namespace TestTree
         }
 
         [TestMethod]
-        public void AddSimilarElements()
+        public void AddSimilarElements() // добавление элемента, который уже есть в дереве
         {
             // Arrange
             MyTree<Shape> tree = new MyTree<Shape>(0);
             int expectedCount = 3;
+            int expectedLeaves = 2;
 
             // Act
             tree.AddPoint(new Shape("элемент", 5));
             tree.AddPoint(new Shape("элемент", 5));
             tree.AddPoint(new Shape("элемент", 7));
             tree.AddPoint(new Shape("элемент", 7));
-            tree.AddPoint(new Shape("элемент", 6));
-            tree.AddPoint(new Shape("элемент", 6));
+            tree.AddPoint(new Shape("элемент", 4));
+            tree.AddPoint(new Shape("элемент", 4));
             //     5
             //    /  \
             //   6    7    - 2 листа
+            int leafCount = tree.CountLeaves();
 
             // Assert
             Assert.AreEqual(expectedCount, tree.Count);
+            Assert.AreEqual(expectedLeaves, leafCount);
         }
 
         [TestMethod]
@@ -279,7 +485,7 @@ namespace TestTree
         }
 
         [TestMethod]
-        public void Remove_EmptyTree()
+        public void Remove_EmptyTree() // удаление в пустом дереве
         {
             // Arrange
             MyTree<Shape> tree = new MyTree<Shape>(0);
@@ -292,25 +498,63 @@ namespace TestTree
         }
 
         [TestMethod]
-        public void MakeTree_TransformToSearchTree()
+        public void Remove_RootTreeToEmptyTree() // удаление корня в дереве из одного элемента
         {
             // Arrange
             MyTree<Shape> tree = new MyTree<Shape>(0);
-            Shape[] array = new Shape[3];
-            int expectedLeaves = 2;
+            tree.AddPoint(new Shape("элемент", 10));
+            int expectedCount = 0;
 
             // Act
-            for (int i = 0; i < array.Length; i++)
-            {
-                array[i] = new Shape("N", i+1);
-            }
-            tree = new MyTree<Shape>(array);
-            MyTree<Shape> searchTree = tree.TransformToFindTree();
+            bool removed = tree.Remove(new Shape("элемент", 10));
 
-            int leafCount = tree.CountLeaves();
+            // Assert
+            Assert.IsTrue(removed);
+            Assert.AreEqual(expectedCount, tree.Count);
+        }
+
+        [TestMethod]
+        public void MakeTree_TransformToSearchTree() // трансформация ИСД в дерево поиска
+        {
+            // Arrange
+            Shape[] array = new Shape[3];
+            // элементы: 1, 2, 3
+            array[0] = new Shape("N", 2);
+            array[1] = new Shape("N", 1);
+            array[2] = new Shape("N", 3);
+            int expectedLeaves = 1;
+            MyTree<Shape> tree = new MyTree<Shape>(array);
+            // в ИСД 3 элемента должны расположиться следующим образом:
+            //     2      - высота дерева = 1
+            //    /  \
+            //   1    3   - 2 листа
+
+            // Act
+            MyTree<Shape> searchTree = tree.TransformToFindTree();
+            //     1
+            //    / 
+            //   2    - высота дерева = 2
+            //  / 
+            // 3      - 1 лист
+
+            int leafCount = searchTree.CountLeaves();
 
             // Assert
             Assert.AreEqual(expectedLeaves, leafCount);
+        }
+
+        [TestMethod]
+        public void MakeTree_TransformToSearchTree_EmptyTree() // трансформация пустого ИСД в дерево поиска
+        {
+            // Arrange
+            int expectedCount = 0;
+            MyTree<Shape> tree = new MyTree<Shape>();
+
+            // Act
+            MyTree<Shape> searchTree = tree.TransformToFindTree();
+
+            // Assert
+            Assert.AreEqual(expectedCount, searchTree.Count);
         }
 
 

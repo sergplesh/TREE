@@ -30,7 +30,16 @@ namespace TREE
         public int Count => count;
 
         /// <summary>
-        /// Конструктор для сбалансированного дерева
+        /// Конструктор для сбалансированного дерева без параметров
+        /// </summary>
+        public MyTree()
+        {
+            count = 0;
+            root = null;
+        }
+
+        /// <summary>
+        /// Конструктор для сбалансированного дерева с параметром (количество элементов в дереве)
         /// </summary>
         /// <param name="lenght">заданное число элементов в создаваемом дереве</param>
         public MyTree(int lenght)
@@ -147,8 +156,10 @@ namespace TREE
         /// Добавление в дерево поиска
         /// </summary>
         /// <param name="data">добавляемое инфополе</param>
-        public bool AddPoint(T data)
+        public bool AddPoint(T item)
         {
+            T data = (T)item.Clone(); // выделяем память под элемент
+
             // с помощью данных двух переменных найдём место в дереве поиска для добавляемого элемента
             Point<T>? point = root;
             Point<T>? current = null;
@@ -177,7 +188,7 @@ namespace TREE
                 else
                 {
                     // движемся дальше по дереву
-                    if (point.Data.CompareTo(data) < 0) // меньшие - в левое поддерево
+                    if (point.Data.CompareTo(data) > 0) // меньшие - в левое поддерево
                     {
                         point = point.Left;
                     }
@@ -195,7 +206,7 @@ namespace TREE
             {
                 Point<T> newPoint = new Point<T>(data); // создаём элемент с заданным инфополем
                 // присоединяем к найденному листу current с правильной стороны
-                if (current.Data.CompareTo(data) < 0) // если меньше - элемент идёт в левое поддерево
+                if (current.Data.CompareTo(data) > 0) // если меньше - элемент идёт в левое поддерево
                     current.Left = newPoint;
                 else // если больше - в правое
                     current.Right = newPoint;
@@ -228,23 +239,26 @@ namespace TREE
         /// </summary>
         public MyTree<T> TransformToFindTree()
         {
-            // Собираем все элементы в массив
-            T[] array = new T[count]; // в массиве столько элементов, сколько в дереве
-            int current = 0;
-            TransformToArray(root, array, ref current);
-
-            MyTree<T> searchTree = new MyTree<T>(0); // создадим пустое дерево, которое заполним элементами
-                                                     // исходного ИСД только уже так, чтобы это было деревом поиска
-
-            // на основе элементов в массиве создаём дерево поиска (добавляя элементы)
-            searchTree.root = new Point<T>(array[0]);
-            searchTree.count = 0;
-            for (int i = 1; i < array.Length; i++)
+            if (root != null) // если дерево не пустое
             {
-                searchTree.AddPoint(array[i]); //добавляем элементы как в дерево поиска
+                // Собираем все элементы в массив
+                T[] array = new T[count]; // в массиве столько элементов, сколько в дереве
+                int current = 0;
+                TransformToArray(root, array, ref current);
+
+                T[] rootSearchTree = [array[0]]; // это будет корень дерева
+                MyTree<T> searchTree = new MyTree<T>(rootSearchTree); // создадим пустое дерево, которое заполним элементами
+                                                         // исходного ИСД только уже так, чтобы это было деревом поиска
+
+                // на основе элементов в массиве создаём дерево поиска (добавляя элементы)
+                for (int i = 1; i < array.Length; i++)
+                {
+                    searchTree.AddPoint(array[i]); //добавляем элементы как в дерево поиска
+                }
+                // возвращаем дерево поиска
+                return searchTree;
             }
-            // возвращаем дерево поиска
-            return searchTree;
+            else return new MyTree<T>();
         }
 
         /// <summary>
@@ -263,7 +277,7 @@ namespace TREE
             while (current != null && !current.Data.Equals(searched))
             {
                 parent = current; // запоминаем предыдущий элемент
-                if (current.Data.CompareTo(searched) < 0) // если текущий элемент меньше удаляемого
+                if (current.Data.CompareTo(searched) > 0) // если текущий элемент меньше удаляемого
                     current = current.Left; // то идём влево
                 else
                     current = current.Right; // иначе - вправо

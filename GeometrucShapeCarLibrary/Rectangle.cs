@@ -73,9 +73,9 @@ namespace GeometrucShapeCarLibrary
         {
             base.Init();
             Console.WriteLine("введите длину прямоугольника");
-            Length = EnterNumber.EnterDoubleNumber();
+            Length = EnterNumber.EnterIntNumber();
             Console.WriteLine("введите ширину прямоугольника");
-            Width = EnterNumber.EnterDoubleNumber();
+            Width = EnterNumber.EnterIntNumber();
         }
 
         // переопределяем метод RandomInit для наследника от Shape
