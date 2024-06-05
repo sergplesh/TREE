@@ -165,7 +165,7 @@ namespace TREE
                             Console.WriteLine("Удаление дерева поиска завершено");
                             break;
                         }
-                    case 9: // первый выбор (Формирование вручную дерева поиска)
+                    case 9: // девятый выбор (Формирование вручную дерева поиска)
                         {
                             searchTree.Clear(); // очищаем дерево поиска
                             // количество элементов в формируемом дереве
@@ -179,7 +179,7 @@ namespace TREE
                                 MenuChoise(ref added);
                                 Console.WriteLine("Введите данные для объекта:");
                                 added.Init(); // задаем параметры для элемента, который хотим добавить
-                                searchTree.AddPoint((Shape)added.Clone());
+                                searchTree.AddPoint(added);
                             }
                             Console.WriteLine("Сформированное дерево поиска:");
                             searchTree.ShowTree();
